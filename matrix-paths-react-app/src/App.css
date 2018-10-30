@@ -1,0 +1,45 @@
+.app {
+  margin-top: 30px;
+}
+
+.app .header {
+  border-bottom: 2px solid #333;
+}
+
+.app .header span {
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.app .header a {
+  color: #00b5ad;
+}
+
+.app .header a:hover {
+  text-decoration: underline;
+}
+
+.app .header .icons {
+  float: right;
+}
+
+.app .textarea {
+  min-height: 260px;
+  border: 1px solid #d4d4d5;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.app .control-panel-container .field {
+  margin: 10px 0;
+}
+
+.app .control-panel-container .field label {
+  font-weight: 600;
+}
+
+.app .control-panel-container .field .upload-button input {
+  display: block;
+  width: 100%;
+}
