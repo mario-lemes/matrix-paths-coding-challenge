@@ -24,12 +24,12 @@
 }
 
 .app .textarea {
-  min-height: 260px;
+  min-height: 320px;
   border: 1px solid #d4d4d5;
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
-  max-height: 260px;
+  max-height: 320px;
   overflow-y: scroll;
 }
 

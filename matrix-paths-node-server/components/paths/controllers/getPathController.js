@@ -43,18 +43,18 @@ exports.getPathController = async (req, res, next) => {
       throw Boom.notFound(`File ${req.query.file} not found`);
     }
 
+    req.connection.setTimeout(300000);
+
     let resPath = await runPy([filePath]);
 
     resPath = JSON.parse(resPath.toString());
 
     if (resPath.ok)
-      return res
-        .status(200)
-        .json({
-          ok: true,
-          result: resPath.result,
-          executionTime: resPath.executionTime,
-        });
+      return res.status(200).json({
+        ok: true,
+        result: resPath.result,
+        executionTime: resPath.executionTime,
+      });
 
     throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);
   } catch (err) {

@@ -21,6 +21,7 @@ class App extends Component {
       textAreaContent: [],
       filesUploaded: [],
       fileSelected: null,
+      isImpatient: false,
       isError: false,
       error: {
         header: '',
@@ -101,6 +102,10 @@ class App extends Component {
     event.preventDefault();
     this.setState({ requestingPath: true });
 
+    this.timerID = setTimeout(() => {
+      this.setState({ isImpatient: true });
+    }, 5000);
+
     getPath(this.state.fileSelected)
       .then(response => {
         console.log(response);
@@ -123,7 +128,7 @@ class App extends Component {
               </li>
               <li>
                 <span>
-                  Execution time: {response.data.result.executionTime}
+                  Execution time: {response.data.executionTime * 1000} secs.
                 </span>
               </li>
             </ul>
@@ -134,10 +139,12 @@ class App extends Component {
           requestingPath: false,
           paths: [...state.paths, response.data.result],
           textAreaContent: [...state.textAreaContent, content],
+          isImpatient: false,
         }));
       })
       .catch(error => {
         this.setState({
+          isImpatient: false,
           requestingPath: false,
           isError: true,
           error: {
@@ -148,6 +155,10 @@ class App extends Component {
           },
         });
       });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerID);
   }
 
   render() {
@@ -208,6 +219,7 @@ class App extends Component {
               requestingPath={this.state.requestingPath}
               filesUploaded={this.state.filesUploaded}
               fileSelected={this.state.fileSelected}
+              isImpatient={this.state.isImpatient}
             />
           </div>
           <div className="chart-container col-xs-12 col-md-8">

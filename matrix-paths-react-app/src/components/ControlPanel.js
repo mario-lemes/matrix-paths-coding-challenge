@@ -6,6 +6,7 @@ import {
   Button,
   Icon,
   Divider,
+  Message,
 } from 'semantic-ui-react';
 
 class ControlPanel extends Component {
@@ -20,8 +21,10 @@ class ControlPanel extends Component {
       requestingPath,
       filesUploaded,
       fileSelected,
+      isImpatient,
     } = this.props;
 
+    console.log(isImpatient);
     return (
       <React.Fragment>
         <Form.Field>
@@ -73,6 +76,9 @@ class ControlPanel extends Component {
           >
             Get Path
           </Button>
+          <Message compact color="teal" hidden={!isImpatient}>
+            Please be patient, the script is still running
+          </Message>
         </Form.Field>
       </React.Fragment>
     );
