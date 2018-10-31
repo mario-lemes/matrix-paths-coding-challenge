@@ -3,6 +3,7 @@ import { Icon, Header } from 'semantic-ui-react';
 import ControlPanel from './components/ControlPanel';
 import TextArea from './components/TextArea';
 import AreaChart from './components/AreaChart';
+import CustomMessage from './components/CustomMessage';
 import { uploadFile } from './api';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -17,11 +18,18 @@ class App extends Component {
       uploadingFile: false,
       filesUploaded: [],
       fileSelected: null,
+      isError: false,
+      error: {
+        header: '',
+        list: [],
+      },
     };
 
     this.onHandleFileUploadInput = this.onHandleFileUploadInput.bind(this);
     this.onHandleFileUploadButton = this.onHandleFileUploadButton.bind(this);
+    this.onHandleErrorDismiss = this.onHandleErrorDismiss.bind(this);
   }
+
   onHandleFileUploadInput(event) {
     event.preventDefault();
     this.setState({
@@ -31,17 +39,33 @@ class App extends Component {
 
   async onHandleFileUploadButton(event) {
     event.preventDefault();
-    this.setState((state, props) =>
-      this.setState({ uploadingFile: !state.uploadingFile }),
-    );
+    this.setState((state, props) => ({ uploadingFile: true }));
 
-    uploadFile(null)
-      .then(function(response) {
+    uploadFile(this.state.newFile)
+      .then(response => {
         console.log(response);
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(error => {
+        this.setState((state, props) => ({
+          uploadingFile: false,
+          isError: true,
+          error: {
+            header: 'There was some error uploading the file',
+            list: [error.response.data.message],
+          },
+        }));
       });
+  }
+
+  onHandleErrorDismiss(event) {
+    event.preventDefault();
+    this.setState((state, props) => ({
+      isError: false,
+      error: {
+        header: '',
+        list: [],
+      },
+    }));
   }
 
   render() {
@@ -78,6 +102,13 @@ class App extends Component {
           </div>
         </Header>
         <div className="body row">
+          <div className="message-container col-12">
+            <CustomMessage
+              onHandleErrorDismiss={this.onHandleErrorDismiss}
+              isError={this.state.isError}
+              error={this.state.error}
+            />
+          </div>
           <div className="textarea-container col-xs-12 col-md-8">
             <TextArea />
           </div>
