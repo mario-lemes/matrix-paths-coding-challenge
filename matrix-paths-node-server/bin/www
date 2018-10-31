@@ -20,7 +20,7 @@ app.listen(port, process.env.HOST, async err => {
 
   console.log(`Server listening on ${process.env.HOST}:${port}`);
 });
-
+app.timeout = 60 * 4 * 1000; // 4 min
 /**
  * Event listener for HTTP server "error" event.
  */

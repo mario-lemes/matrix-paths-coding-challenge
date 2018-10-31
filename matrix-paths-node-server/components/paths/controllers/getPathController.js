@@ -7,9 +7,15 @@ const request = require('request-promise-native');
  * getPathController(): Controller to get a specific path
  * from the matrix selected
  */
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 exports.getPathController = async (req, res, next) => {
   try {
-    if (!req.query.file) {
+    await timeout(50000);
+    return res.status(200).json({ ok: true });
+    /*if (!req.query.file) {
       throw Boom.badRequest('File should be provided');
     }
 
@@ -40,7 +46,7 @@ exports.getPathController = async (req, res, next) => {
     if (resPath.ok)
       return res.status(200).json({ ok: true, result: resPath.result });
 
-    throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);
+    throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);*/
   } catch (err) {
     return next(Boom.boomify(err));
   }
