@@ -12,3 +12,11 @@ export async function uploadFile(file) {
     },
   });
 }
+
+export async function getPath(file) {
+  return axios.get(apiUrl + '/v1/paths', {
+    params: {
+      file,
+    },
+  });
+}

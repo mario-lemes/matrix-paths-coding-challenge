@@ -98,12 +98,13 @@ class App extends Component {
     event.preventDefault();
     this.setState({ requestingPath: true });
 
-    getPath(this.state.newFile)
+    console.log(this.state.fileSelected);
+    getPath(this.state.fileSelected)
       .then(response => {
         console.log(response);
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       });
   }
 

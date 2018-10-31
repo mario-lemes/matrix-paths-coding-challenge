@@ -24,7 +24,7 @@ class MatrixParser:
             # Check dimensions type value
             if dimensions[0].isalpha() or dimensions[1].isalpha():
                 raise Exception(
-                    f"Dimensions of the matrix are not numeric values, "
+                    f"Dimensions of the matrix are not numeric values, " \
                     f"given: {dimensions[0]}, {dimensions[1]}"
                 )
 
@@ -42,7 +42,7 @@ class MatrixParser:
                     # Check matrix type value
                     if value.isalpha():
                         raise Exception(
-                            f"Matrix item are not a numeric value, "
+                            f"Matrix item are not a numeric value, " \
                             f"given: {value}, in line {i}"
                         )
 
