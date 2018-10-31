@@ -17,7 +17,8 @@ class App extends Component {
       newFile: null,
       uploadingFile: false,
       requestingPath: false,
-      path: null,
+      paths: [],
+      textAreaContent: [],
       filesUploaded: [],
       fileSelected: null,
       isError: false,
@@ -72,7 +73,9 @@ class App extends Component {
           isError: true,
           error: {
             header: 'There was some error uploading the file',
-            list: [error.response.data.message],
+            list: error.response.data.message
+              ? [error.response.data.message]
+              : [],
           },
         });
       });
@@ -98,13 +101,50 @@ class App extends Component {
     event.preventDefault();
     this.setState({ requestingPath: true });
 
-    console.log(this.state.fileSelected);
     getPath(this.state.fileSelected)
       .then(response => {
         console.log(response);
+        const pathUnfolded = response.data.result.path.map(item => item.value);
+
+        const content = (
+          <div key={this.state.paths.length}>
+            <p className="file-name">
+              <span>File:</span> {this.state.fileSelected}
+            </p>
+            <ul>
+              <li>
+                <span>Longest path:</span> {pathUnfolded.join(',')}
+              </li>
+              <li>
+                <span>Length:</span> {response.data.result.pathLength}
+              </li>
+              <li>
+                <span>Steep gradient:</span> {response.data.result.steepLength}
+              </li>
+              <li>
+                <span>Execution time:</span>
+              </li>
+            </ul>
+          </div>
+        );
+
+        this.setState((state, props) => ({
+          requestingPath: false,
+          paths: [...state.paths, response.data.result],
+          textAreaContent: [...state.textAreaContent, content],
+        }));
       })
       .catch(error => {
-        console.log(error.response);
+        this.setState({
+          requestingPath: false,
+          isError: true,
+          error: {
+            header: 'There was some error obtaining the results',
+            list: error.response.data.message
+              ? [error.response.data.message]
+              : [],
+          },
+        });
       });
   }
 
@@ -150,7 +190,10 @@ class App extends Component {
             />
           </div>
           <div className="textarea-container col-xs-12 col-md-8">
-            <TextArea />
+            <TextArea
+              paths={this.state.paths}
+              textAreaContent={this.state.textAreaContent}
+            />
           </div>
           <div className="control-panel-container col-xs-12 col-md-4">
             <ControlPanel

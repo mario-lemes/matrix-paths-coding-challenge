@@ -29,6 +29,19 @@
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
+  max-height: 260px;
+  overflow-y: scroll;
+}
+
+.app .textarea p.file-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.app .textarea ul {
+  list-style: circle;
+  padding-left: 30px;
 }
 
 .app .control-panel-container .field {
