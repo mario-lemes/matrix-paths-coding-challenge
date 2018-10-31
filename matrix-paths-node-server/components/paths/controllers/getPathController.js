@@ -7,7 +7,8 @@ let runPy = args => {
   try {
     return new Promise(function(resolve, reject) {
       const { spawn } = require('child_process');
-      const pyprog = spawn('python', [
+      console.log(path.join(process.env.SCRIPT_PATH, 'main.py'));
+      const pyprog = spawn(process, env.PYTHON_PATH, [
         path.join(process.env.SCRIPT_PATH, 'main.py'),
         ...args,
       ]);
