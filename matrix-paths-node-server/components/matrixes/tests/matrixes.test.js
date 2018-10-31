@@ -28,5 +28,21 @@ describe('/matrixes', () => {
         throw err;
       }
     });
+
+    it('should upload a file #2', async () => {
+      try {
+        const resMatrix = await chai
+          .request(app)
+          .post('/api/v1/matrixes')
+          .attach('file', 'tests/filesForTesting/map.txt', 'map.txt');
+
+        resMatrix.body.should.be.an('object');
+        resMatrix.body.should.have.property('ok', true);
+        resMatrix.body.should.have.property('file');
+        resMatrix.body.file.should.have.property('originalname', 'map.txt');
+      } catch (err) {
+        throw err;
+      }
+    });
   });
 });

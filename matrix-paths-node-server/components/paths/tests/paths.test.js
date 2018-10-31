@@ -29,5 +29,22 @@ describe('/paths', () => {
         throw err;
       }
     });
+
+    xit('should get a specific path based on a specific matrix #2', async () => {
+      try {
+        const resPath = await chai
+          .request(app)
+          .get('/api/v1/paths?file=map.txt');
+
+        resPath.body.should.be.an('object');
+        resPath.body.should.have.property('ok', true);
+        resPath.body.should.have.property('result');
+        resPath.body.result.should.have.property('path');
+        resPath.body.result.should.have.property('pathLength');
+        resPath.body.result.should.have.property('steepLength');
+      } catch (err) {
+        throw err;
+      }
+    });
   });
 });

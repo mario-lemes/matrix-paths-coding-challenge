@@ -27,6 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* ROUTES */
+app.use(function(req, res, next) {
+  req.socket.setKeepAlive(false);
+  next();
+});
+
 app.use('/api', apiRoutes);
 
 /* STATIC FILES (ONLY FOR LOCALHOST) */

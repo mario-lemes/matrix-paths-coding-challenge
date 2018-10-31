@@ -19,6 +19,8 @@ exports.getPathController = async (req, res, next) => {
       throw Boom.notFound(`File ${req.query.file} not found`);
     }
 
+    req.socket.setKeepAlive(false);
+
     let resPath = null;
     switch (req.query.typePath) {
       case 'longest-descendent':
