@@ -21,6 +21,7 @@ try:
         if os.path.exists(args[0]):
             # Intantiate a new Parser
             Parser = MatrixParser()
+
             # Parse the matrix from the file given
             matrix = Parser.getFileMatrix(args[0])
 
@@ -30,11 +31,13 @@ try:
             # Get the longest (and  steepest path)
             path = Finder.getLongestDescendentPath()
 
-            print(path)
+            print(json.dumps({"ok": True, "result": path}, ensure_ascii=False))
         else:
             raise FileNotFoundError(f"File {args[0]} does not exist")
     else:
         raise Exception("File is required")
 except:
-    print(tr(sys.exc_info()[1]))
+    print(
+        json.dumps({"ok": False, "error": str(sys.exc_info()[1])}, ensure_ascii=False)
+    )
 
