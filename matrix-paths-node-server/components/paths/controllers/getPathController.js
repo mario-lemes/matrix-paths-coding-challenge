@@ -29,7 +29,7 @@ exports.getPathController = async (req, res, next) => {
           formData: {
             file: filePath,
           },
-          timeout: 120,
+          timeout: 120 * 1000, //120 secs
         });
         break;
     }
