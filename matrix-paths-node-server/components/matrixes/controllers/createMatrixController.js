@@ -6,12 +6,13 @@ const Boom = require('boom');
 exports.createMatrixController = async (req, res, next) => {
   try {
     // Check if there is file attached
-    let file = null;
-    if (req.file) {
-      file = {
-        ...req.file,
-      };
+    if (!req.file) {
+      throw Boom.badRequest('File should be provided');
     }
+
+    const file = {
+      ...req.file,
+    };
 
     return res.status(200).json({ ok: true, file });
   } catch (err) {

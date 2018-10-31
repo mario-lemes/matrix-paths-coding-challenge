@@ -15,6 +15,8 @@ class ControlPanel extends Component {
       onHandleFileUploadButton,
       isNewFile,
       uploadingFile,
+      filesUploaded,
+      fileSelected,
     } = this.props;
     return (
       <React.Fragment>
@@ -33,7 +35,7 @@ class ControlPanel extends Component {
           <Button
             animated="vertical"
             fluid
-            disabled={!isNewFile}
+            disabled={!isNewFile || uploadingFile}
             loading={uploadingFile}
             color="teal"
             onClick={onHandleFileUploadButton}
@@ -46,22 +48,17 @@ class ControlPanel extends Component {
         </Form.Field>
         <Divider />
         <Form.Field>
-          <label>Files Uploaded:</label>
+          <label>Select a File:</label>
           <Dropdown
             placeholder="Select File Uploaded"
             fluid
             selection
-            options={[
-              {
-                text: 'Jenny Hess',
-                value: 'Jenny Hess',
-                icon: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
-              },
-            ]}
+            disabled={!filesUploaded || filesUploaded.length <= 0}
+            options={filesUploaded}
           />
         </Form.Field>
         <Form.Field>
-          <Button fluid color="teal">
+          <Button fluid color="teal" disabled={!fileSelected}>
             Get Path
           </Button>
         </Form.Field>

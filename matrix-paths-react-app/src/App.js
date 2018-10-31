@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Icon, Header } from 'semantic-ui-react';
 import ControlPanel from './components/ControlPanel';
 import TextArea from './components/TextArea';
-
-import axios from 'axios';
+import AreaChart from './components/AreaChart';
+import { uploadFile } from './api';
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
@@ -15,6 +15,8 @@ class App extends Component {
     this.state = {
       newFile: null,
       uploadingFile: false,
+      filesUploaded: [],
+      fileSelected: null,
     };
 
     this.onHandleFileUploadInput = this.onHandleFileUploadInput.bind(this);
@@ -27,31 +29,28 @@ class App extends Component {
     });
   }
 
-  onHandleFileUploadButton(event) {
+  async onHandleFileUploadButton(event) {
     event.preventDefault();
     this.setState((state, props) =>
       this.setState({ uploadingFile: !state.uploadingFile }),
     );
 
-    /*axios.post('/user', {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });*/
+    uploadFile(null)
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
     return (
       <div className="app container">
         <Header as="h1">
-          Coding Challenge App -{' '}
+          Coding Challenge App{' '}
           <span>
-            by{' '}
+            - by{' '}
             <a
               target="_blank"
               href="mailto:mariolemesmedina@gmail.com"
@@ -88,7 +87,12 @@ class App extends Component {
               onHandleFileUploadButton={this.onHandleFileUploadButton}
               isNewFile={this.state.newFile}
               uploadingFile={this.state.uploadingFile}
+              filesUploades={this.state.filesUploaded}
+              fileSelected={this.state.fileSelected}
             />
+          </div>
+          <div className="chart-container col-xs-12 col-md-8">
+            <AreaChart />
           </div>
         </div>
       </div>
