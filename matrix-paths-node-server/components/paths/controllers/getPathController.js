@@ -3,22 +3,27 @@ const fs = require('fs');
 const Boom = require('boom');
 const request = require('request-promise-native');
 
-let runPy = args =>
-  new Promise(function(resolve, reject) {
-    const { spawn } = require('child_process');
-    const pyprog = spawn('python', [
-      path.join(process.env.SCRIPT_PATH, 'main.py'),
-      ...args,
-    ]);
+let runPy = args => {
+  try {
+    return new Promise(function(resolve, reject) {
+      const { spawn } = require('child_process');
+      const pyprog = spawn('python', [
+        path.join(process.env.SCRIPT_PATH, 'main.py'),
+        ...args,
+      ]);
 
-    pyprog.stdout.on('data', function(data) {
-      resolve(data);
-    });
+      pyprog.stdout.on('data', function(data) {
+        resolve(data);
+      });
 
-    pyprog.stderr.on('data', data => {
-      reject(data);
+      pyprog.stderr.on('data', data => {
+        reject(data);
+      });
     });
-  });
+  } catch (error) {
+    reject(error);
+  }
+};
 
 /**
  * getPathController(): Controller to get a specific path

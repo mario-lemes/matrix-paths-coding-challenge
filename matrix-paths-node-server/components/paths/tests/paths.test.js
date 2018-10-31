@@ -30,7 +30,7 @@ describe('/paths', () => {
       }
     });
 
-    it('should get a specific path based on a specific matrix #2', async () => {
+    xit('should get a specific path based on a specific matrix #2', async () => {
       try {
         const resPath = await chai
           .request(app)
