@@ -4,7 +4,7 @@ import ControlPanel from './components/ControlPanel';
 import TextArea from './components/TextArea';
 import AreaChart from './components/AreaChart';
 import CustomMessage from './components/CustomMessage';
-import { uploadFile } from './api';
+import { uploadFile, getPath } from './api';
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
@@ -16,6 +16,8 @@ class App extends Component {
     this.state = {
       newFile: null,
       uploadingFile: false,
+      requestingPath: false,
+      path: null,
       filesUploaded: [],
       fileSelected: null,
       isError: false,
@@ -27,6 +29,10 @@ class App extends Component {
 
     this.onHandleFileUploadInput = this.onHandleFileUploadInput.bind(this);
     this.onHandleFileUploadButton = this.onHandleFileUploadButton.bind(this);
+    this.onHandleDropdownChange = this.onHandleDropdownChange.bind(this);
+    this.onHandleRequestingPathButton = this.onHandleRequestingPathButton.bind(
+      this,
+    );
     this.onHandleErrorDismiss = this.onHandleErrorDismiss.bind(this);
   }
 
@@ -39,33 +45,66 @@ class App extends Component {
 
   async onHandleFileUploadButton(event) {
     event.preventDefault();
-    this.setState((state, props) => ({ uploadingFile: true }));
+    this.setState({ uploadingFile: true });
 
     uploadFile(this.state.newFile)
       .then(response => {
-        console.log(response);
+        const newFile = [];
+        if (
+          !this.state.filesUploaded.some(
+            file => file.value === response.data.file.filename,
+          )
+        ) {
+          newFile.push({
+            text: response.data.file.filename,
+            value: response.data.file.filename,
+          });
+        }
+
+        this.setState((state, props) => ({
+          uploadingFile: false,
+          filesUploaded: [...state.filesUploaded, ...newFile],
+        }));
       })
       .catch(error => {
-        this.setState((state, props) => ({
+        this.setState({
           uploadingFile: false,
           isError: true,
           error: {
             header: 'There was some error uploading the file',
             list: [error.response.data.message],
           },
-        }));
+        });
       });
   }
 
   onHandleErrorDismiss(event) {
     event.preventDefault();
-    this.setState((state, props) => ({
+    this.setState({
       isError: false,
       error: {
         header: '',
         list: [],
       },
-    }));
+    });
+  }
+
+  onHandleDropdownChange(event, { value }) {
+    event.preventDefault();
+    this.setState({ fileSelected: value });
+  }
+
+  onHandleRequestingPathButton(event) {
+    event.preventDefault();
+    this.setState({ requestingPath: true });
+
+    getPath(this.state.newFile)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -116,9 +155,12 @@ class App extends Component {
             <ControlPanel
               onHandleFileUploadInput={this.onHandleFileUploadInput}
               onHandleFileUploadButton={this.onHandleFileUploadButton}
+              onHandleDropdownChange={this.onHandleDropdownChange}
+              onHandleRequestingPathButton={this.onHandleRequestingPathButton}
               isNewFile={this.state.newFile}
               uploadingFile={this.state.uploadingFile}
-              filesUploades={this.state.filesUploaded}
+              requestingPath={this.state.requestingPath}
+              filesUploaded={this.state.filesUploaded}
               fileSelected={this.state.fileSelected}
             />
           </div>

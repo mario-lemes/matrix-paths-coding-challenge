@@ -13,7 +13,7 @@ exports.getPathController = async (req, res, next) => {
       throw Boom.badRequest('File should be provided');
     }
 
-    const filePath = path.join(__dirname, '../../../files', req.query.file);
+    const filePath = path.join(process.env.FILES_PATH, req.query.file);
 
     if (!fs.existsSync(filePath)) {
       throw Boom.notFound(`File ${req.query.file} not found`);

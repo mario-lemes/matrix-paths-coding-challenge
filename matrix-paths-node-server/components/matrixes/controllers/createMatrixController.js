@@ -10,11 +10,12 @@ exports.createMatrixController = async (req, res, next) => {
       throw Boom.badRequest('File should be provided');
     }
 
-    const file = {
-      ...req.file,
-    };
+    const { fieldname, filename, mimetype, originalname, size } = req.file;
 
-    return res.status(200).json({ ok: true, file });
+    return res.status(200).json({
+      ok: true,
+      file: { fieldname, filename, mimetype, originalname, size },
+    });
   } catch (err) {
     return next(Boom.boomify(err));
   }
