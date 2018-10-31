@@ -48,7 +48,13 @@ exports.getPathController = async (req, res, next) => {
     resPath = JSON.parse(resPath.toString());
 
     if (resPath.ok)
-      return res.status(200).json({ ok: true, result: resPath.result });
+      return res
+        .status(200)
+        .json({
+          ok: true,
+          result: resPath.result,
+          executionTime: resPath.executionTime,
+        });
 
     throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);
   } catch (err) {

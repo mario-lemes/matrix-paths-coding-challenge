@@ -122,7 +122,9 @@ class App extends Component {
                 <span>Steep gradient:</span> {response.data.result.steepLength}
               </li>
               <li>
-                <span>Execution time:</span>
+                <span>
+                  Execution time: {response.data.result.executionTime}
+                </span>
               </li>
             </ul>
           </div>

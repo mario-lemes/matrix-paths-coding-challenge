@@ -20,8 +20,8 @@ try:
     if args:
         if os.path.exists(args[0]):
             # Starting time of the script
-
             startTime = time.time()
+
             # Intantiate a new Parser
             Parser = MatrixParser()
 
