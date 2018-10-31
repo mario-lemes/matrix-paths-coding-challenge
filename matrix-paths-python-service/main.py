@@ -1,7 +1,7 @@
 import sys
 import os
 import json
-
+import time
 
 from matrixParser import MatrixParser
 from pathFinder import PathFinder
@@ -19,6 +19,9 @@ args = sys.argv[1:]
 try:
     if args:
         if os.path.exists(args[0]):
+            # Starting time of the script
+
+            startTime = time.time()
             # Intantiate a new Parser
             Parser = MatrixParser()
 
@@ -31,7 +34,15 @@ try:
             # Get the longest (and  steepest path)
             path = Finder.getLongestDescendentPath()
 
-            print(json.dumps({"ok": True, "result": path}, ensure_ascii=False))
+            # Execution time
+            executionTime = time.time() - startTime
+
+            print(
+                json.dumps(
+                    {"ok": True, "result": path, "executionTime": executionTime},
+                    ensure_ascii=False,
+                )
+            )
         else:
             raise FileNotFoundError(f"File {args[0]} does not exist")
     else:
