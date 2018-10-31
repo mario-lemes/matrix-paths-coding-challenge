@@ -149,10 +149,13 @@ class PathFinder:
                         "row": row,
                         "column": column,
                         "depthLevel": depthLevel,
-                    }
-                ] + self.__discoverDescendentPaths(
-                    descendentValue["row"], descendentValue["column"], depthLevel + 1
-                )
+                    },
+                    *self.__discoverDescendentPaths(
+                        descendentValue["row"],
+                        descendentValue["column"],
+                        depthLevel + 1,
+                    ),
+                ]
         else:
             # If there is no more valid cardinal values we are in an ending point
             return [
