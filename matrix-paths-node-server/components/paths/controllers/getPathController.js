@@ -13,9 +13,12 @@ function timeout(ms) {
 
 exports.getPathController = async (req, res, next) => {
   try {
-    await timeout(50000);
-    return res.status(200).json({ ok: true });
-    /*if (!req.query.file) {
+    if (!req.query.file) {
+      await timeout(100000);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (!req.query.file) {
       throw Boom.badRequest('File should be provided');
     }
 
@@ -46,7 +49,7 @@ exports.getPathController = async (req, res, next) => {
     if (resPath.ok)
       return res.status(200).json({ ok: true, result: resPath.result });
 
-    throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);*/
+    throw Boom.badImplementation(`Something went wrong: ${resPath.error}`);
   } catch (err) {
     return next(Boom.boomify(err));
   }
