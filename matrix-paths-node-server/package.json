@@ -4,6 +4,7 @@
   "description": "Hill Climbing Server",
   "main": "app.js",
   "scripts": {
+    "start": "node -r dotenv/config bin/www dotenv_config_path=envs/.dev.env",
     "start:dev": "nodemon -r dotenv/config bin/www dotenv_config_path=envs/.dev.env",
     "test:watch": "\"npm run test -- --watch\"",
     "test": "mocha \"./{,!(node_modules)/**/}*.test.js\" --recursive --require tests/mocha.opts.js --reporter spec --timeout 200000 --exit"

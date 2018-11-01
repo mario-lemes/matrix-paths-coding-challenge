@@ -55,14 +55,3 @@ class MatrixParser:
             "rows": int(dimensions[1]),
             "content": matrix,
         }
-
-    """
-    getRandomMatrix(): method to get the matrix and its dimensions randomly
-
-    @param {Integer} maxValue      Higest value of the matrix elements
-    @param {Integer} rows          First dimension value
-    @param {Integer} columns       Second dimension value
-    """
-
-    def getRandomMatrix(self, maxValue=1500, n=1000, m=1000):
-        pass
