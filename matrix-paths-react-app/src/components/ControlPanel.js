@@ -24,7 +24,6 @@ class ControlPanel extends Component {
       isImpatient,
     } = this.props;
 
-    console.log(isImpatient);
     return (
       <React.Fragment>
         <Form.Field>
@@ -76,7 +75,12 @@ class ControlPanel extends Component {
           >
             Get Path
           </Button>
-          <Message compact color="teal" hidden={!isImpatient}>
+          <Message
+            className="impatient-message"
+            compact
+            color="teal"
+            hidden={!isImpatient}
+          >
             Please be patient, the script is still running
           </Message>
         </Form.Field>

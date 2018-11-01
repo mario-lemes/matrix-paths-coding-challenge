@@ -108,7 +108,8 @@ class App extends Component {
 
     getPath(this.state.fileSelected)
       .then(response => {
-        console.log(response);
+        clearTimeout(this.timerID);
+
         const pathUnfolded = response.data.result.path.map(item => item.value);
 
         const content = (
@@ -127,9 +128,7 @@ class App extends Component {
                 <span>Steep gradient:</span> {response.data.result.steepLength}
               </li>
               <li>
-                <span>
-                  Execution time: {response.data.executionTime * 1000} secs.
-                </span>
+                <span>Execution time:</span> {response.data.executionTime} secs.
               </li>
             </ul>
           </div>
@@ -137,7 +136,10 @@ class App extends Component {
 
         this.setState((state, props) => ({
           requestingPath: false,
-          paths: [...state.paths, response.data.result],
+          paths: [
+            ...state.paths,
+            { ...response.data, file: state.fileSelected },
+          ],
           textAreaContent: [...state.textAreaContent, content],
           isImpatient: false,
         }));
@@ -223,7 +225,7 @@ class App extends Component {
             />
           </div>
           <div className="chart-container col-xs-12 col-md-8">
-            <AreaChart />
+            <AreaChart paths={this.state.paths} />
           </div>
         </div>
       </div>

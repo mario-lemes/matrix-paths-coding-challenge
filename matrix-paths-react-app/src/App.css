@@ -44,6 +44,10 @@
   padding-left: 30px;
 }
 
+.app .textarea ul li span {
+  color: #00b5ad;
+}
+
 .app .control-panel-container .field {
   margin: 10px 0;
 }
@@ -54,5 +58,9 @@
 
 .app .control-panel-container .field .upload-button input {
   display: block;
+  width: 100%;
+}
+
+.app .control-panel-container .field .impatient-message {
   width: 100%;
 }
