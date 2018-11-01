@@ -27,12 +27,12 @@ class ControlPanel extends Component {
     return (
       <React.Fragment>
         <Form.Field>
-          <label>Upload a New File:</label>
+          <label>1. Upload a new file:</label>
           <Input
             type="file"
             onChange={onHandleFileUploadInput}
             className="upload-button"
-            placeholder="Select a text file..."
+            placeholder="Upload a text file..."
             defaultValue=""
             disabled={uploadingFile}
           />
@@ -46,18 +46,18 @@ class ControlPanel extends Component {
             color="teal"
             onClick={onHandleFileUploadButton}
           >
-            <Button.Content hidden>Upload File</Button.Content>
-            <Button.Content visible>
+            <Button.Content hidden>
               <Icon name="upload" />
             </Button.Content>
+            <Button.Content visible>Upload File</Button.Content>
           </Button>
         </Form.Field>
         <Divider />
         <Form.Field>
-          <label>Select a File:</label>
+          <label>2. Select a file:</label>
           <Dropdown
             onChange={onHandleDropdownChange}
-            placeholder="Select File Uploaded"
+            placeholder="Select a file already uplaoded..."
             fluid
             selection
             disabled={!filesUploaded || filesUploaded.length <= 0}
@@ -69,11 +69,11 @@ class ControlPanel extends Component {
           <Button
             fluid
             color="teal"
-            disabled={!fileSelected}
+            disabled={!fileSelected || requestingPath}
             loading={requestingPath}
             onClick={onHandleRequestingPathButton}
           >
-            Get Path
+            Get Longest Path
           </Button>
           <Message
             className="impatient-message"
